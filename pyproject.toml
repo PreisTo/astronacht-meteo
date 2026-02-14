@@ -1,10 +1,9 @@
 [build-system]
-requires = ["setuptools"]
+requires = "setuptools"
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "astronacht-meteo"
-version = 0.0.1
+version = "0.0.1"
 readme = "RADME.md"
-authors = [{name = "Tobias Preis", email = "tobias.preis@uibk.ac.at"}]
-
+authors = {name = "Tobias Preis", email = "tobias.preis@uibk.ac.at"}
