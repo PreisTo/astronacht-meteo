@@ -1,5 +1,6 @@
 from .geosphere_hub import GeosphereAPI
 import numpy as np
+from datetime import datetime
 import logging
 
 log = logging.getLogger(__name__)
@@ -40,7 +41,9 @@ class AROME(GeosphereAPI):
             res["features"][0]["properties"]["parameters"][parameters[0]]["data"],
             dtype=float,
         )
-        self._times = np.array(res["timestamps"], dtype=np.datetime64)
+        self._times = [
+            datetime.strptime(i, "%Y-%m-%dT%H:%M+00:00") for i in res["timestamps"]
+        ]
         return str(params.items())
 
     @property
