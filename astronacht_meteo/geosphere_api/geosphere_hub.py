@@ -31,7 +31,6 @@ class GeosphereAPI:
 
     def _query_dict(self, params: dict) -> dict:
         res = requests.get(self._url, params=params)
-        print(res.status_code)
         assert res.status_code == 200
         return res.json()
 
