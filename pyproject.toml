@@ -5,9 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "astronacht_meteo"
 version = "0.0.1"
-readme = "RADME.md"
+readme = "README.md"
 authors = [{name = "Tobias Preis", email = "tobias.preis@uibk.ac.at"}]
 dependencies = [
 	"requests",
-	"geopy",
+	"matplotlib",
+	"numpy",
+	"astroplan"
 ]
