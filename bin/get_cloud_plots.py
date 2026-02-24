@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 from astronacht_meteo.astronacht import Astronacht
 
 if __name__ == "__main__":
