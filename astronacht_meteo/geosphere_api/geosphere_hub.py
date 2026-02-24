@@ -6,19 +6,24 @@ class GeosphereAPI:
     version = "v1"
 
     def __init__(self):
-        self._check_parameters()
+        self._check_init_parameters()
         self._url = (
             f"{self.host}/{self.version}/{self.dtype}/{self.mode}/{self.resource_id}"
         )
         pass
 
-    def _check_parameters(self):
+    def _check_init_parameters(self):
         assert self.dtype is not None
         assert self.mode is not None
         assert self.resource_id is not None
 
     def _query(self, query_string):
         res = requests.get(self._url + "?" + query_string)
+        print(res.status_code)
+        print(res.json())
+
+    def _query_dict(self, params: dict):
+        res = requests.get(self._url, params=params)
         print(res.status_code)
         print(res.json())
 
