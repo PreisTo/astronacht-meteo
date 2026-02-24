@@ -1,0 +1,9 @@
+name: astronacht
+channels:
+  - conda-forge
+dependencies:
+  - matplotlib
+  - numpy
+  - python=3.14
+  - requests
+  - astroplan
