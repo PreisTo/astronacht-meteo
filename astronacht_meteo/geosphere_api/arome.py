@@ -4,6 +4,12 @@ import numpy as np
 
 
 class AROME(GeosphereAPI):
+    """
+    The AROME high resolution model:
+    Application of Research to Operations at MEsoscale
+    https://data.hub.geosphere.at/dataset/nwp-v1-1h-2500m
+    """
+
     resource_id = "nwp-v1-1h-2500m"
     mode = "forecast"
 
@@ -16,7 +22,7 @@ class AROME(GeosphereAPI):
         self,
         parameters=["tcc"],
         position="47.26435136748764,11.342491131078917",  # VFH
-    ):
+    ) -> str:
         params = {
             "parameters": parameters,
             "lat_lon": position,
