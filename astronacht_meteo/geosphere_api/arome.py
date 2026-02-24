@@ -1,6 +1,8 @@
 from .geosphere_hub import GeosphereAPI
-from datetime import datetime, timedelta
 import numpy as np
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class AROME(GeosphereAPI):
@@ -28,9 +30,26 @@ class AROME(GeosphereAPI):
             "lat_lon": position,
             "forecast_offset": 0,
         }
-
-        res = self._query_dict(params)
+        if not str(params.items()) in self._last_query.keys():
+            res = self._query_dict(params)
+        else:
+            res = self._last_query[str(params.items())]
         self._last_query[str(params.items())] = res
-        self._data = np.array(res["data"], dtype=float)
-        self._times = res["timestamps"]
+
+        self._data = np.array(
+            res["features"][0]["properties"]["parameters"][parameters[0]]["data"],
+            dtype=float,
+        )
+        self._times = np.array(res["timestamps"], dtype=np.datetime64)
         return str(params.items())
+
+    @property
+    def last_query(self) -> dict | None:
+        """
+        Returns the last_query dict.
+        Caution - the keys are dicts
+        """
+        if not hasattr(self, "_last_query"):
+            log.info("No query has been run yet - last_query is empty")
+            return None
+        return self._last_query
