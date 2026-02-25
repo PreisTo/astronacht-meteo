@@ -4,6 +4,7 @@ channels:
 dependencies:
   - matplotlib
   - numpy
+  - numba
   - python=3.14
   - requests
   - astroplan
