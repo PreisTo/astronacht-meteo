@@ -32,8 +32,11 @@ class TAWES(GeosphereAPI):
         distances = np.abs(angular_distance_fast_rad(lon, lat, lons, lats))
         ids_sorted = np.argsort(distances)
         log.warning(
-            f'The closes stations to you are {[stations[i]["name"] for i in ids_sorted[:3]]}'
+            "The closes stations to you are "
+            + [stations[i]["name"] for i in ids_sorted[:3]]
         )
+        self._closest_station = stations[ids_sorted[0]]
+        self._near_stations = stations[ids_sorted[:3]]
 
     def get_current_data(self, parameters=[], position=None, station=None):
         if position is None and station is None and not hasattr(self, "_station"):
