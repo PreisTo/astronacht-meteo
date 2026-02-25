@@ -6,6 +6,7 @@ Some tools for helping to decide if its worth to do an Astronacht.
 - [ ] add docs
 - [ ] add github page/actions to run automatically
 - [ ] add some basic tests
+- [ ] add meteoblue API - caution only 5000
 
 ## Installation
 There is a `environment.yml` for creating a `conda` environment either with `conda` or `mamba`.
