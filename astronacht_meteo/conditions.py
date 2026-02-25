@@ -5,6 +5,9 @@ class Conditions:
     def _percipitation(self):
         pass
 
+    def _rel_humidity(self):
+        pass
+
     def _sun(self):
         pass
 
