@@ -1,7 +1,8 @@
-import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from astroplan import Observer
+import astropy.units as u
 from astronacht_meteo.geosphere_api.arome import AROME
 from datetime import datetime, timedelta
 import pytz
@@ -10,6 +11,7 @@ import pytz
 class Astronacht:
     def __init__(self, date=None, time=None, location="Technik") -> None:
         self._create_date(date, time)
+        self._create_observer(location)
         self._arome = AROME()
 
     def _create_date(self, date, time) -> None:
@@ -31,6 +33,16 @@ class Astronacht:
 
         temp_date += timedelta(days=2 - temp_date.weekday())
         self._observation_time = temp_date
+
+    def _create_observer(self, location):
+        self._observer = Observer(
+            longitude=11.342491131078917 * u.deg,
+            latitude=47.26435136748764 * u.deg,
+            elevation=600 * u.m,
+            name="Technik",
+            timezone="Europe/Vienna",
+        )
+        # TODO: get current conditions from tawes
 
     def get_cloud_plot(self) -> tuple[mpl.figure.Figure, mpl.axes.Axes]:
         meta_info = self._arome.get_timeseries_data()  # just the defaults here
