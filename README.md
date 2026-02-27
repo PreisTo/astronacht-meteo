@@ -22,6 +22,8 @@ There is a `environment.yml` for creating a `conda` environment either with `con
 It is using `Python=3.14` because who wants outdated Python anyway (usually me...).
 
 ```bash
+git clone https://github.com/PreisTo/astronacht-meteo.git
+cd astronacht-meteo
 mamba env create -f environment.yml -n astronacht
 mamba activate astronacht
 pip install . # install the package
@@ -37,7 +39,7 @@ Basic usage for getting the cloud coverage today at Technik
 
 Contributions are *_very_* welcome!
 Please create an issue if you find a bug or have a feature request.
-If you want to implement it - even better! Add your changes and create a PR to the `dev` branch and I'll try to solve it :)
+If you want to implement it - even better! Add your changes and create a PR to the `dev` branch :)
 
 ## Acknowledgment
 Thanks a lot to Geosphere Austria for the free API access!
