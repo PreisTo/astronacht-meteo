@@ -1,4 +1,4 @@
-class Conditions:
+class Condition:
     def _clouds(self):
         pass
 
@@ -17,6 +17,14 @@ class Conditions:
     def _risk(self):
         pass
 
+    def _zenith(self):
+        pass
 
-class MinimalConditions(Conditions):
+
+class MinimalCondition(Condition):
     pass
+
+
+class Conditions:
+    def __init__(self, minimal: MinimalCondition, current: Condition = None):
+        pass
