@@ -1,0 +1,25 @@
+location:
+  name: "Technik"
+  lon: 11.342491131078917 #degree
+  lat: 47.26435136748764 #degree
+  elevation: 600 #meter
+  timezone: "Europe/Vienna"
+
+date:
+  day: "today"
+  start_time: "earliest"
+  stop_time: false
+  duration: 120 # min
+
+
+targets: 
+  auto: true# Optional
+
+
+minimum_weather: # Optional
+  cloud_coverage: 0.2 # 0..1
+  rel_humidity: 0.8 # 0..1
+  min_temp: false # either false or a float
+  max_temp: false # either false or a float
+  max_wind: 10 #m/s
+  
