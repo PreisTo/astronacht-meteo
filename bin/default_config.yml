@@ -16,10 +16,13 @@ targets:
   auto: true# Optional
 
 
-minimum_weather: # Optional
-  cloud_coverage: 0.2 # 0..1
-  rel_humidity: 0.8 # 0..1
-  min_temp: false # either false or a float
-  max_temp: false # either false or a float
-  max_wind: 10 #m/s
-  
+minimum_conditions: # Optional
+  weather:
+    cloud_coverage: 0.2 # 0..1
+    rel_humidity: 0.8 # 0..1
+    min_temp: false # either false or a float
+    max_temp: false # either false or a float
+    max_wind: 10 #m/s
+  moon:
+    max_phase: 0.6
+    min_phase: 0.0
