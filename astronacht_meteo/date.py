@@ -1,11 +1,19 @@
-from .location import Location
 from datetime import datetime
-import pytz
 from typing import Optional
+
+import pytz
+
+from .location import Location
 
 
 class Date:
-    def __init__(self, day: datetime, start_time, duration, stop_time):
+    def __init__(
+        self,
+        day: datetime,
+        start_time,
+        duration: Optional = None,
+        stop_time: Optional = None,
+    ):
         pass
 
     @classmethod

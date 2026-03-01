@@ -1,7 +1,8 @@
-import matplotlib as mpl
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 from datetime import datetime
+
+import matplotlib as mpl
+import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import pytz
 
 

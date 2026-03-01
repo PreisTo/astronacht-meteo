@@ -1,9 +1,11 @@
+from pathlib import Path
 from typing import Union
+
+from astronacht_meteo.utils.config import load_config
+from astronacht_meteo.weather import Weather
+
 from .date import Date
 from .location import Location
-from astronacht_meteo.weather import Weather
-from astronacht_meteo.utils.config import load_config
-from pathlib import Path
 
 
 class Astronacht:
