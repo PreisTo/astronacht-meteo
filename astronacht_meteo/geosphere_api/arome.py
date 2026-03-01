@@ -36,11 +36,13 @@ class AROME(GeosphereAPI):
         else:
             res = self._last_query[str(params.items())]
         self._last_query[str(params.items())] = res
+        self._data = np.empty((len(parameters), 61))
+        for i, p in enumerate(parameters):
 
-        self._data = np.array(
-            res["features"][0]["properties"]["parameters"][parameters[0]]["data"],
-            dtype=float,
-        )
+            self._data[i] = np.array(
+                res["features"][0]["properties"]["parameters"][p]["data"],
+                dtype=float,
+            )
         self._times = [
             datetime.strptime(i, "%Y-%m-%dT%H:%M+00:00") for i in res["timestamps"]
         ]
