@@ -5,11 +5,23 @@ from typing import Optional
 
 class Location:
     def __init__(self, lon, lat, name: Optional = None, elevation=None, **kwargs):
+        self._lon = lon
+        self._lat = lat
+        self._name = name
+        self._elevation = elevation
         self._observer = Observer(longitude=lon * u.deg, latitude=lat * u.deg, **kwargs)
 
     @property
     def observer(self) -> Observer:
         return self._observer
+
+    @property
+    def lon(self):
+        return self._lon
+
+    @property
+    def lat(self):
+        return self._lat
 
     @classmethod
     def from_dict(cls, config_dict: dict):
