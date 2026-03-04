@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from typing import Tuple
 
 import numpy as np
 
@@ -27,7 +28,7 @@ class AROME(GeosphereAPI):
         self,
         parameters=["tcc"],
         position="47.26435136748764,11.342491131078917",  # VFH
-    ) -> str:
+    ) -> Tuple[str, dict]:
         params = {
             "parameters": parameters,
             "lat_lon": position,
@@ -38,17 +39,17 @@ class AROME(GeosphereAPI):
         else:
             res = self._last_query[str(params.items())]
         self._last_query[str(params.items())] = res
-        self._data = np.empty((len(parameters), 61))
+        data = {}
         for i, p in enumerate(parameters):
-
-            self._data[i] = np.array(
+            data[p] = np.array(
                 res["features"][0]["properties"]["parameters"][p]["data"],
                 dtype=float,
             )
         self._times = [
             datetime.strptime(i, "%Y-%m-%dT%H:%M+00:00") for i in res["timestamps"]
         ]
-        return str(params.items())
+        data["times"] = self._times
+        return str(params.items()), data
 
     @property
     def last_query(self) -> dict | None:
@@ -56,6 +57,7 @@ class AROME(GeosphereAPI):
         Returns the last_query dict.
         Caution - the keys are dicts
         """
+        # TODO: store in some cache file?
         if not hasattr(self, "_last_query"):
             log.info("No query has been run yet - last_query is empty")
             return None
