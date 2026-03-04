@@ -8,7 +8,7 @@ class Weather:
         self._arome = AROME()
 
     def _get_data_from_arome(self):
-        # clouds
+        # clouds, surface pressure, temperature 2m, rel. humidity 2m
         parameters = [
             "tcc",
             "sp",
