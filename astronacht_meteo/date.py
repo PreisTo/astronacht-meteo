@@ -10,7 +10,7 @@ class Date:
     def __init__(
         self,
         day: datetime,
-        start_time,
+        start_time: datetime,
         duration: Optional[datetime] = None,
         stop_time: Optional[datetime] = None,
         timezone: Optional[timezone] = pytz.timezone("Europe/Vienna"),
