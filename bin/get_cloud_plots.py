@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-from astronacht_meteo.astronacht import Astronacht
 import matplotlib.pyplot as plt
+
+from astronacht_meteo.astronacht import Astronacht
 
 if __name__ == "__main__":
     astronacht = Astronacht()

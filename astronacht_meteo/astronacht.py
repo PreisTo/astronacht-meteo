@@ -1,9 +1,11 @@
+from pathlib import Path
 from typing import Union
+
+from astronacht_meteo.utils.config import load_config
+from astronacht_meteo.weather import Weather
+
 from .date import Date
 from .location import Location
-from astronacht_meteo.weather import Weather
-from astronacht_meteo.utils.config import load_config
-from pathlib import Path
 
 
 class Astronacht:
@@ -16,6 +18,12 @@ class Astronacht:
 
     def __init__(self, date=None, location="Technik") -> None:
         self._weather = Weather(location)
+
+    def _check_location(self, location):
+        pass
+
+    def _check_date(self, date):
+        pass
 
     @classmethod
     def from_config(cls, config_file: Union[Path, str]):

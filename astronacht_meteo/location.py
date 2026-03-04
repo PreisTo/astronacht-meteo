@@ -1,6 +1,7 @@
-from astroplan import Observer
-import astropy.units as u
 from typing import Optional
+
+import astropy.units as u
+from astroplan import Observer
 
 
 class Location:

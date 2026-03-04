@@ -19,6 +19,7 @@ class Weather:
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lat}",
         )
+        assert response is not None
 
     @property
     def clouds(self):

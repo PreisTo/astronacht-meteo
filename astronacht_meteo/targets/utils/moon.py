@@ -1,6 +1,6 @@
-from astropy.coordinates import get_body
-import numpy as np
 import astropy.units as u
+import numpy as np
+from astropy.coordinates import get_body
 
 MOON_RADIUS = 1737.4 * u.km
 

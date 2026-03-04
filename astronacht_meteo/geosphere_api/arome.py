@@ -1,7 +1,9 @@
-from .geosphere_hub import GeosphereAPI
-import numpy as np
-from datetime import datetime
 import logging
+from datetime import datetime
+
+import numpy as np
+
+from .geosphere_hub import GeosphereAPI
 
 log = logging.getLogger(__name__)
 
