@@ -29,7 +29,7 @@ class Astronacht:
     ) -> None:
         self._location = self._check_location(location)
         self._date = self._check_date(date)
-        self._weather = Weather(location)
+        self._weather = Weather(self._location)
         self._targets = targets
 
     def _check_location(self, location: Union[Location, str]) -> Location:
@@ -56,6 +56,10 @@ class Astronacht:
             raise NotImplementedError("This is a todo... need to handle that in Date")
         else:
             raise NotImplementedError("You need to provide date as either Date or str")
+
+    @property
+    def weather(self):
+        return self._weather
 
     @classmethod
     def from_config(cls, config_file: Union[Path, str]):
