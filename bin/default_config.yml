@@ -3,11 +3,9 @@ location:
   lon: 11.342491131078917 #degree
   lat: 47.26435136748764 #degree
   elevation: 600 #meter
-  timezone: "Europe/Vienna"
 
 date:
   day: "10.03.2026"
-  tz: "UTC+1"
   start_time: "19:00"
   stop_time: false
   duration: 120 # min
