@@ -45,10 +45,8 @@ class AROME(GeosphereAPI):
                 res["features"][0]["properties"]["parameters"][p]["data"],
                 dtype=float,
             )
-        self._times = [
-            datetime.strptime(i, "%Y-%m-%dT%H:%M+00:00") for i in res["timestamps"]
-        ]
-        data["times"] = self._times
+        times = [datetime.fromisoformat(i) for i in res["timestamps"]]
+        data["times"] = times
         return str(params.items()), data
 
     @property
