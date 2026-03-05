@@ -5,12 +5,16 @@ from astroplan import Observer
 
 
 class Location:
+    # TODO: add types
     def __init__(self, lon, lat, name: Optional = None, elevation=None, **kwargs):
         self._lon = lon
         self._lat = lat
         self._name = name
         self._elevation = elevation
         self._observer = Observer(longitude=lon * u.deg, latitude=lat * u.deg, **kwargs)
+
+    def set_weather_conditions(self):
+        raise NotImplementedError
 
     @property
     def observer(self) -> Observer:

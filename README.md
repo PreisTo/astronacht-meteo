@@ -15,7 +15,9 @@ All scripts default to our location and timezone but can be easily changed for y
 - [ ] add meteoblue API - caution only 5000
 - [ ] add GUI
 - [ ] add script for current situation
-- [ ] create a config instead of hardcoding defaults
+- [x] create a config instead of hardcoding defaults
+- [ ] find an api that supplies elevation map of tyrol --> get angular blockage --> [Open Elevation](https://open-elevation.com/) or [Google Elevation](https://developers.google.com/maps/documentation/elevation/overview) or [tiris](https://www.tirol.gv.at/statistik-budget/tiris/)
+
 
 ## Installation
 There is a `environment.yml` for creating a `conda` environment either with `conda` or `mamba`.

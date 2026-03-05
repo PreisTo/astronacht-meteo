@@ -1,4 +1,8 @@
+import logging
+
 import requests
+
+log = logging.getLogger(__name__)
 
 
 class GeosphereAPI:
@@ -26,12 +30,18 @@ class GeosphereAPI:
 
     def _query(self, query_string) -> dict:
         res = requests.get(self._url + "?" + query_string)
-        assert res.status_code == 200
+        if res.status_code != 200:
+            log.error(res)
+            raise ValueError
+
         return res.json()
 
     def _query_dict(self, params: dict) -> dict:
         res = requests.get(self._url, params=params)
-        assert res.status_code == 200
+        if res.status_code != 200:
+            log.error(res)
+            raise ValueError
+
         return res.json()
 
     def get_metadata(self) -> None:
