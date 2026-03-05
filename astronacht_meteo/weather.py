@@ -6,6 +6,7 @@ class Weather:
     def __init__(self, location: Location):
         self._location = location
         self._arome = AROME()
+        self._get_data_from_arome()
 
     def _get_data_from_arome(self):
         # clouds, surface pressure, temperature 2m, rel. humidity 2m
@@ -15,24 +16,33 @@ class Weather:
             "t2m",
             "rh2m",
         ]
-        response = self._arome.get_timeseries_data(
+        query_key, data = self._arome.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lat}",
         )
-        assert response is not None
+        assert data is not None
+        self._clouds = data["tcc"]
+        self._pressure = data["sp"]
+        self._temperature = data["t2m"]
+        self._relative_humidity = data["rh2m"]
+        self._times = data["times"]
 
     @property
     def clouds(self):
-        pass
+        return self._clouds
 
     @property
     def relative_humidity(self):
-        pass
+        return self._relative_humidity
 
     @property
-    def wind(self):
-        pass
+    def temperature(self):
+        return self._temperature
 
     @property
     def pressure(self):
-        pass
+        return self._pressure
+
+    @property
+    def times(self):
+        return self._times
