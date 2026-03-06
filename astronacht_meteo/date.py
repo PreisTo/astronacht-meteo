@@ -49,7 +49,7 @@ class Date:
             day = datetime.day
         else:
             try:
-                day = datetime.strptime("%d.%m.%y", config_dict["day"])
+                day = datetime.strptime(config_dict["day"], "%d.%m.%Y")
             except Exception as e:
                 raise TypeError(
                     "The day must be either today, tomorrow or a date "
@@ -60,14 +60,14 @@ class Date:
             raise NotImplementedError
         else:
             try:
-                start_time = datetime.strptime("%H:%M", config_dict["start_time"])
+                start_time = datetime.strptime(config_dict["start_time"], "%H:%M")
 
             except Exception as e:
                 raise TypeError(
                     "The start_time must be either earliest or" + "specified by hh:mm"
                 ) from e
 
-        if "start_time" in config_dict.keys():
+        if "stop_time" in config_dict.keys():
             if config_dict["stop_time"].lower() == "latest":
                 raise NotImplementedError
             else:

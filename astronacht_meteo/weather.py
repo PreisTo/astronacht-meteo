@@ -26,6 +26,7 @@ class Weather:
         self._temperature = data["t2m"]
         self._relative_humidity = data["rh2m"]
         self._times = data["times"]
+        self._ref_time = data["reference_time"]
 
     @property
     def clouds(self):
@@ -46,3 +47,7 @@ class Weather:
     @property
     def times(self):
         return self._times
+
+    @property
+    def ref_time(self):
+        return self._ref_time

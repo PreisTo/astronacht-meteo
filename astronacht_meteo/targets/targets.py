@@ -6,10 +6,11 @@ class Targets:
         self._targets = targets_list
 
     @classmethod
-    def from_config(cls, config_dict):
+    def from_dict(cls, config_dict):
         targets = []
         if "list" in config_dict.keys():
             for el in config_dict["list"]:
-                targets.append(SkyCoord.from_name(el))
+                if el not in ["saturn", "jupiter"]:
+                    targets.append(SkyCoord.from_name(el))
 
         return cls(targets)

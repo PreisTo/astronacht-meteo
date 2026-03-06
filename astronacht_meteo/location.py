@@ -31,17 +31,17 @@ class Location:
     @classmethod
     def from_dict(cls, config_dict: dict):
         if "elevation" in config_dict.keys():
-            elevation = config_dict["elevation"] * u.m
+            elevation = config_dict["elevation"]
             config_dict.pop("elevation")
         else:
             elevation = None
 
-        lon = config_dict["lon"] * u.deg
-        lat = config_dict["lat"] * u.deg
+        lon = config_dict["lon"]
+        lat = config_dict["lat"]
         config_dict.pop("lon")
         config_dict.pop("lat")
         if "name" in config_dict.keys():
-            name = config_dict["keys"]
+            name = config_dict["name"]
             config_dict.pop("name")
         else:
             name = None

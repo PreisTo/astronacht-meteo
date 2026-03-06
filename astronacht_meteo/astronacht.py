@@ -65,8 +65,8 @@ class Astronacht:
     def from_config(cls, config_file: Union[Path, str]):
         config_dict = load_config(config_file)
         location = Location.from_dict(config_dict["location"])
-        date = Date.from_config(config_dict["date"], location)
+        date = Date.from_dict(config_dict["date"], location)
         if "targets" in config_dict.keys():
-            targets = Targets.from_config(config_dict["targets"])
+            targets = Targets.from_dict(config_dict["targets"])
 
         return cls(date=date, location=location, targets=targets)
