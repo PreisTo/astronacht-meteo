@@ -39,6 +39,8 @@ class GeosphereAPI:
     def _query_dict(self, params: dict) -> dict:
         res = requests.get(self._url, params=params)
         if res.status_code != 200:
+            log.error(self._url)
+            log.error(params)
             log.error(res)
             raise ValueError
 
