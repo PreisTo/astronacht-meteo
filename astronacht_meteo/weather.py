@@ -1,5 +1,8 @@
 from astronacht_meteo.geosphere_api.arome import AROME
 from astronacht_meteo.location import Location
+from astronacht_meteo.io.plot_timeseries import get_weather_plot
+import astropy.units as u
+import numpy as np
 
 
 class Weather:
@@ -15,18 +18,23 @@ class Weather:
             "sp",
             "t2m",
             "rh2m",
+            "u10m",
+            "v10m",
         ]
         query_key, data = self._arome.get_timeseries_data(
             parameters=parameters,
-            position=f"{self._location.lat},{self._location.lat}",
+            position=f"{self._location.lat},{self._location.lon}",
         )
         assert data is not None
-        self._clouds = data["tcc"]
-        self._pressure = data["sp"]
-        self._temperature = data["t2m"]
+        self._clouds = data["tcc"] * 100
+        self._pressure = data["sp"] * u.Pa
+        self._temperature = data["t2m"] * u.Celsius
         self._relative_humidity = data["rh2m"]
         self._times = data["times"]
         self._ref_time = data["reference_time"]
+        self._wind = np.sqrt(
+            np.power(data["u10m"], 2) + np.power(data["v10m"], 2)
+        ) * u.Unit("m/s")
 
     @property
     def clouds(self):
@@ -42,7 +50,11 @@ class Weather:
 
     @property
     def pressure(self):
-        return self._pressure
+        return self._pressure.to(u.Unit("hPa"))
+
+    @property
+    def wind(self):
+        return self._wind
 
     @property
     def times(self):
@@ -51,3 +63,7 @@ class Weather:
     @property
     def ref_time(self):
         return self._ref_time
+
+    def plot_parameter(self, ax=None, parameter="clouds", title=True, date=None):
+        ax = get_weather_plot(self, ax=ax, parameter=parameter, title=title, date=None)
+        return ax

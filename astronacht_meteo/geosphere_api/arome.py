@@ -47,6 +47,7 @@ class AROME(GeosphereAPI):
             )
         times = [datetime.fromisoformat(i) for i in res["timestamps"]]
         data["times"] = times
+        data["reference_time"] = datetime.fromisoformat(res["reference_time"])
         return str(params.items()), data
 
     @property

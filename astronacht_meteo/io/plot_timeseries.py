@@ -2,24 +2,51 @@ import matplotlib as mpl
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import pytz
+from typing import TYPE_CHECKING, Optional
+import numpy as np
+import astropy.units as u
 
-from astronacht_meteo.weather import Weather
+if TYPE_CHECKING:
+    from astronacht_meteo.weather import Weather
+    from astronacht_meteo.date import Date
 
 
-def get_cloud_plot(weather: Weather) -> tuple[mpl.figure.Figure, mpl.axes.Axes]:
-    fig, ax = plt.subplots(1, layout="constrained")
+def get_weather_plot(
+    weather: "Weather",
+    parameter="clouds",
+    ax=None,
+    title=True,
+    date: Optional["Date"] = None,
+) -> mpl.axes.Axes:
+    if ax is None:
+        fig, ax = plt.subplots(1, layout="constrained")
+    data = getattr(weather, parameter)
+    ax.plot(weather.times, data)
+    if isinstance(data, u.Quantity):
+        data = data.value
 
-    ax.plot(weather._times, weather._data)
+    if np.min(data) < 0:
+        y_min = -np.abs(np.min(data)) * 1.1
+    else:
+        y_min = 0.9 * np.min(data)
+
+    if np.max(data) < 0:
+        y_max = -np.abs(np.max(data)) * 0.9
+    else:
+        y_max = 1.1 * np.max(data)
+
+    ax.set_ylim(y_min, y_max)
 
     ax.xaxis.set_major_formatter(
         mdates.DateFormatter("%m-%d %H:%M", tz=pytz.timezone("Europe/Vienna"))
     )
     ax.tick_params(axis="x", labelrotation=60)
     ax.set_xlabel("Time")
-    ax.set_ylabel("Cloudcover [Percentage]")
+    ax.set_ylabel(parameter)
     ref_time = weather.ref_time
 
-    ax.set_title("Last update from " + f"{ref_time}" + "UTC")
+    if title:
+        ax.set_title("Last update from " + f"{ref_time}" + "UTC")
     ax.legend()
 
-    return fig, ax
+    return ax
