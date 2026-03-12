@@ -15,7 +15,7 @@ def get_weather_plot(
     weather: "Weather",
     parameter="clouds",
     ax=None,
-    title=True,
+    title=False,
     date: Optional["Date"] = None,
 ) -> mpl.axes.Axes:
     if ax is None:
@@ -42,11 +42,16 @@ def get_weather_plot(
     )
     ax.tick_params(axis="x", labelrotation=60)
     ax.set_xlabel("Time")
-    ax.set_ylabel(parameter)
+    temp = getattr(weather, parameter)
+    if isinstance(temp, u.Quantity):
+        ylabel = parameter + f" [{temp.unit}]"
+    else:
+        ylabel = parameter + " [a.u.]"
+
+    ax.set_ylabel(ylabel)
     ref_time = weather.ref_time
 
     if title:
         ax.set_title("Last update from " + f"{ref_time}" + "UTC")
-    ax.legend()
 
     return ax

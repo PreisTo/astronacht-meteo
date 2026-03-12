@@ -26,10 +26,10 @@ class Weather:
             position=f"{self._location.lat},{self._location.lon}",
         )
         assert data is not None
-        self._clouds = data["tcc"] * 100
+        self._clouds = data["tcc"] * 100 * u.percent
         self._pressure = data["sp"] * u.Pa
         self._temperature = data["t2m"] * u.Celsius
-        self._relative_humidity = data["rh2m"]
+        self._relative_humidity = data["rh2m"] * u.percent
         self._times = data["times"]
         self._ref_time = data["reference_time"]
         self._wind = np.sqrt(
@@ -64,6 +64,6 @@ class Weather:
     def ref_time(self):
         return self._ref_time
 
-    def plot_parameter(self, ax=None, parameter="clouds", title=True, date=None):
+    def plot_parameter(self, ax=None, parameter="clouds", title=False, date=None):
         ax = get_weather_plot(self, ax=ax, parameter=parameter, title=title, date=None)
         return ax
