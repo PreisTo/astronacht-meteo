@@ -1,15 +1,17 @@
-from astronacht_meteo.geosphere_api.arome import AROME
-from astronacht_meteo.location import Location
-from astronacht_meteo.io.plot_timeseries import get_weather_plot
 import astropy.units as u
 import numpy as np
 
+from astronacht_meteo.geosphere_api.arome import AROME
+from astronacht_meteo.io.plot_timeseries import get_weather_plot
+from astronacht_meteo.location import Location
+
 
 class Weather:
-    def __init__(self, location: Location):
+    def __init__(self, location: Location, date=None):
         self._location = location
         self._arome = AROME()
         self._get_data_from_arome()
+        self._date = date
 
     def _get_data_from_arome(self):
         # clouds, surface pressure, temperature 2m, rel. humidity 2m
@@ -64,6 +66,8 @@ class Weather:
     def ref_time(self):
         return self._ref_time
 
-    def plot_parameter(self, ax=None, parameter="clouds", title=False, date=None):
-        ax = get_weather_plot(self, ax=ax, parameter=parameter, title=title, date=None)
+    def plot_parameter(self, ax=None, parameter="clouds", title=False):
+        ax = get_weather_plot(
+            self, ax=ax, parameter=parameter, title=title, date=self._date
+        )
         return ax
