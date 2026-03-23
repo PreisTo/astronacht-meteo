@@ -33,10 +33,11 @@ pip install . # install the package
 ```
 
 ## Usage
-Basic usage for getting the cloud coverage today at Technik
+Modify the config file in `bin` and run the `run.py` within the `bin/` dir:
 ```bash
-./bin/get_cloud_plots.py
+./run.py
 ```
+This will give you a quick weather overview.
 
 ## Contributing
 
