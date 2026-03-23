@@ -47,7 +47,9 @@ class AROME(GeosphereAPI):
             )
         times = [datetime.fromisoformat(i) for i in res["timestamps"]]
         data["times"] = times
-        data["reference_time"] = datetime.fromisoformat(res["reference_time"])
+        data["reference_time"] = datetime.fromisoformat(
+            res["reference_time"]
+        ).astimezone(tz=None)
         return str(params.items()), data
 
     @property
