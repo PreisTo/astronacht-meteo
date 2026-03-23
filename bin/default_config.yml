@@ -5,9 +5,9 @@ location:
   elevation: 600 #meter
 
 date:
-  day: "10.03.2026"
+  day: "24.03.2026"
   start_time: "19:00"
-  duration: 120 # min
+  duration: 150 # min
 
 
 targets: 
