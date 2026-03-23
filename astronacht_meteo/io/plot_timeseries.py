@@ -1,14 +1,15 @@
+from typing import TYPE_CHECKING, Optional
+
+import astropy.units as u
 import matplotlib as mpl
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
-import pytz
-from typing import TYPE_CHECKING, Optional
 import numpy as np
-import astropy.units as u
+import pytz
 
 if TYPE_CHECKING:
-    from astronacht_meteo.weather import Weather
     from astronacht_meteo.date import Date
+    from astronacht_meteo.weather import Weather
 
 
 def get_weather_plot(
@@ -36,10 +37,19 @@ def get_weather_plot(
         y_max = 1.1 * np.max(data)
 
     ax.set_ylim(y_min, y_max)
+    if date is not None:
+        ax.fill_between(
+            [date.start_time, date.stop_time],
+            y_min,
+            y_max,
+            color="magenta",
+            alpha=0.2,
+        )
 
     ax.xaxis.set_major_formatter(
         mdates.DateFormatter("%m-%d %H:%M", tz=pytz.timezone("Europe/Vienna"))
     )
+
     ax.tick_params(axis="x", labelrotation=60)
     ax.set_xlabel("Time")
     temp = getattr(weather, parameter)
