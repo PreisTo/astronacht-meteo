@@ -16,16 +16,13 @@ class Date:
         timezone: Optional[timezone] = pytz.timezone("Europe/Vienna"),
     ):
         # TODO: what todo if no duration or stop_time defined? Sunrise?
-        self._day = day
         self._start_time = start_time
+        self._day = day
         if duration is not None:
             self._stop_time = self._start_time + duration
         if stop_time is not None:
-            self._stop_time = stop_time
             duration = self._stop_time - self._start_time
         self._duration = duration
-        self._start_time.replace(tzinfo=timezone)
-        self._stop_time.replace(tzinfo=timezone)
         self._timezone = timezone
 
     @property
@@ -42,14 +39,16 @@ class Date:
 
     @classmethod
     def from_dict(cls, config_dict: dict, location: Location):
+        # TODO: this is a mess
 
         if config_dict["day"].lower() == "today":
-            day = datetime.today()
+            day = datetime.today().strftime("%d.%m.%Y")
         elif config_dict["day"].lower() == "tomorrow":
-            day = datetime.day
+            day = (datetime.today() + timedelta(days=1)).strfimte("%d.%m.%Y")
         else:
             try:
-                day = datetime.strptime(config_dict["day"], "%d.%m.%Y")
+                datetime.strptime(config_dict["day"], "%d.%m.%Y")
+                day = config_dict["day"]
             except Exception as e:
                 raise TypeError(
                     "The day must be either today, tomorrow or a date "
@@ -60,7 +59,8 @@ class Date:
             raise NotImplementedError
         else:
             try:
-                start_time = datetime.strptime(config_dict["start_time"], "%H:%M")
+                datetime.strptime(config_dict["start_time"], "%H:%M")
+                start_time = config_dict["start_time"]
 
             except Exception as e:
                 raise TypeError(
@@ -72,7 +72,8 @@ class Date:
                 raise NotImplementedError
             else:
                 try:
-                    stop_time = datetime.strptime("%H:%M", config_dict["stop_time"])
+                    datetime.strptime("%H:%M", config_dict["stop_time"])
+                    stop_time = config_dict["stop_time"]
 
                 except Exception as e:
                     raise TypeError(
@@ -85,11 +86,23 @@ class Date:
             duration = timedelta(minutes=float(config_dict["duration"]))
         else:
             duration = None
+        start_time = day + "-" + start_time
+        if stop_time is not None:
+            stop_time = day + "-" + stop_time
+            if duration is not None:
+                duration = datetime.strptime(
+                    stop_time, "%d.%m.%Y-%H:%M"
+                ) - datetime.strptime(start_time, "%d.%m.%Y-%H:%M")
+        elif duration is not None:
+            stop_time = datetime.strptime(start_time, "%d.%m.%Y-%H:%M") + duration
+        start_time = datetime.strptime(start_time, "%d.%m.%Y-%H:%M")
 
         if "timezone" in config_dict.keys():
             timezone = pytz.timezone(config_dict["timezone"])
         else:
             timezone = pytz.timezone("Europe/Vienna")
+        start_time = start_time.replace(tzinfo=timezone)
+        stop_time = stop_time.replace(tzinfo=timezone)
 
         return cls(
             day=day,
