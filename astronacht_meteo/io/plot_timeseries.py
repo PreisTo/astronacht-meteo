@@ -18,11 +18,13 @@ def get_weather_plot(
     ax=None,
     title=False,
     date: Optional["Date"] = None,
+    label=None,
+    color=None,
 ) -> mpl.axes.Axes:
     if ax is None:
         fig, ax = plt.subplots(1, layout="constrained")
     data = getattr(weather, parameter)
-    ax.plot(weather.times, data)
+    ax.plot(weather.times, data, label=label, color=color)
     if isinstance(data, u.Quantity):
         data = data.value
 
