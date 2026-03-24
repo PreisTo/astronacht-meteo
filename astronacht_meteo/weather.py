@@ -5,6 +5,8 @@ from astronacht_meteo.geosphere_api.arome import AROME
 from astronacht_meteo.io.plot_timeseries import get_weather_plot
 from astronacht_meteo.location import Location
 
+# TODO:method that gets values for an input time
+
 
 class Weather:
     def __init__(self, location: Location, date=None):

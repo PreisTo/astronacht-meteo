@@ -1,4 +1,5 @@
 from pathlib import Path
+import warnings
 from typing import Optional, Union
 
 from astronacht_meteo.targets import Targets
@@ -31,6 +32,15 @@ class Astronacht:
         self._date = self._check_date(date)
         self._weather = Weather(self._location, self._date)
         self._targets = targets
+        if self._targets is not None:
+            self._targets.weather = self._weather
+
+    def set_targets(self):
+        if self._targets is not None:
+            warnings.warn(
+                "You have already set a Targets object, if it has targets"
+                " we will save them but location and time will be overwritten"
+            )
 
     def _check_location(self, location: Union[Location, str]) -> Location:
         if isinstance(location, Location):
@@ -65,12 +75,18 @@ class Astronacht:
     def date(self):
         return self._date
 
+    @property
+    def targets(self):
+        return self._targets
+
     @classmethod
     def from_config(cls, config_file: Union[Path, str]):
         config_dict = load_config(config_file)
         location = Location.from_dict(config_dict["location"])
         date = Date.from_dict(config_dict["date"], location)
         if "targets" in config_dict.keys():
-            targets = Targets.from_dict(config_dict["targets"])
+            targets = Targets.from_dict(
+                config_dict["targets"], observer=location.observer, date=date
+            )
 
         return cls(date=date, location=location, targets=targets)

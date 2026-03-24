@@ -37,6 +37,10 @@ class Date:
     def stop_time(self):
         return self._stop_time
 
+    @property
+    def duration(self):
+        return self._duration
+
     @classmethod
     def from_dict(cls, config_dict: dict, location: Location):
         # TODO: this is a mess
