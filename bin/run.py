@@ -13,7 +13,14 @@ if __name__ == "__main__":
         nrows=2, ncols=2, layout="constrained", figsize=(16, 9), sharex=True
     )
     ax = ax.flatten()
-    astronacht.weather.plot_parameter(ax=ax[0], parameter="clouds")
+    astronacht.weather.plot_parameter(
+        ax=ax[0], parameter="clouds", color="black", label="AROME"
+    )
+    astronacht.weather.plot_ensemble_parameter(
+        ax=ax[0], parameter="clouds_ensemble", label="Ensemble"
+    )
+    ax[0].legend()
+
     astronacht.weather.plot_parameter(ax=ax[1], parameter="temperature")
     astronacht.weather.plot_parameter(
         ax=ax[2],
