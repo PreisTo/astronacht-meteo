@@ -1,5 +1,5 @@
-from pathlib import Path
 import warnings
+from pathlib import Path
 from typing import Optional, Union
 
 from astronacht_meteo.targets import Targets

@@ -1,9 +1,10 @@
 import warnings
-from astropy.coordinates import SkyCoord, get_body
-from astroplan import FixedTarget
-from astropy.time import Time
+
 import matplotlib.pyplot as plt
+from astroplan import FixedTarget
 from astroplan.plots import plot_airmass
+from astropy.coordinates import SkyCoord, get_body
+from astropy.time import Time
 
 
 class Targets:
