@@ -19,7 +19,7 @@ targets:
     - m42
 
 
-
+# not working (yet)
 minimum_conditions: # Optional
   weather:
     cloud_coverage: 0.2 # 0..1
