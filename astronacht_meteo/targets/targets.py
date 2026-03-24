@@ -38,6 +38,10 @@ class Targets:
 
         return ax
 
+    @property
+    def targets(self):
+        return self._targets
+
     @classmethod
     def from_dict(cls, config_dict, **kwargs):
         observer = kwargs.get("observer", None)
