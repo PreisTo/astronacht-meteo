@@ -2,10 +2,12 @@
 
 import matplotlib.pyplot as plt
 
+import pathlib
 from astronacht_meteo.astronacht import Astronacht
 
 if __name__ == "__main__":
-    astronacht = Astronacht.from_config("./default_config.yml")
+    script_directory = pathlib.Path(__file__).parent.resolve()
+    astronacht = Astronacht.from_config(script_directory / "default_config.yml")
 
     fig, ax = plt.subplots(
         nrows=2, ncols=2, layout="constrained", figsize=(16, 9), sharex=True
