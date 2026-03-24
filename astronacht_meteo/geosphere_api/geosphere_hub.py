@@ -49,7 +49,10 @@ class GeosphereAPI:
     def get_metadata(self) -> None:
         res = requests.get(self._url + "/metadata")
         if res.status_code != 200:
-            raise ValueError(f"The request failed - got status code {res.status_code}")
+            raise ValueError(
+                f"The request failed - got status code {res.status_code}"
+                f" on url {self._url}"
+            )
         self._metadata = res.json()
 
     @property
