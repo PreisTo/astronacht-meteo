@@ -1,7 +1,6 @@
 import astropy.units as u
 import numpy as np
 from datetime import datetime, timedelta
-import pytz
 
 
 from astronacht_meteo.geosphere_api import AROME, Nowcast, Ensemble
@@ -91,7 +90,7 @@ class Weather:
     def _get_data_from_nowcast(self):
         # clouds, surface pressure, temperature 2m, rel. humidity 2m
         parameters = []
-        query_key, data = self._arome.get_timeseries_data(
+        query_key, data = self._nowcast.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
