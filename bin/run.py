@@ -31,9 +31,8 @@ if __name__ == "__main__":
         parameter="pressure",
     )
     fig.suptitle(f"Last update at {astronacht.weather.ref_time}")
-    plt.show()
     if len(astronacht.targets.targets) > 0:
-        fig, ax = plt.subplots(1, layout="constrained", figsize=(16, 9))
+        fig2, ax = plt.subplots(1, layout="constrained", figsize=(16, 9))
         ax = astronacht.targets.get_airmass_plot(ax=ax)
         ax.legend()
-        plt.show()
+    plt.show()
