@@ -5,7 +5,7 @@ location:
   elevation: 600 #meter
 
 date:
-  day: "24.03.2026"
+  day: "today"
   start_time: "19:00"
   duration: 150 # min
 
