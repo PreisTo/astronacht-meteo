@@ -3,7 +3,7 @@ import warnings
 import matplotlib.pyplot as plt
 from astroplan import FixedTarget
 from astroplan.plots import plot_airmass
-from astropy.coordinates import SkyCoord, get_body
+from astropy.coordinates import SkyCoord, get_body, solar_system
 from astropy.time import Time
 
 
@@ -14,19 +14,6 @@ class Targets:
             self._observer = observer
         if date is not None:
             self._date = date
-        
-        # TODO this probably should not be hardcoded, or at least not here
-        self._solar_system_bodies = [
-            "saturn",
-            "jupiter",
-            "sun",
-            "moon",
-            "venus",
-            "mars",
-            "mercury",
-            "uranus",
-            "neptune",
-        ]
 
     def get_airmass_plot(self, ax=None):
         if ax is None:
@@ -63,7 +50,7 @@ class Targets:
         targets = []
         if "list" in config_dict.keys():
             for el in config_dict["list"]:
-                if el not in cls._solar_system_bodies:
+                if el not in solar_system.BODY_NAME_TO_KERNEL_SPEC.keys():
                     targets.append(FixedTarget(SkyCoord.from_name(el), name=el))
                 else:
                     if observer is not None and date is not None:
