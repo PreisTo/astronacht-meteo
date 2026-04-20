@@ -3,7 +3,7 @@ import warnings
 import matplotlib.pyplot as plt
 from astroplan import FixedTarget
 from astroplan.plots import plot_airmass
-from astropy.coordinates import SkyCoord, get_body
+from astropy.coordinates import SkyCoord, get_body, solar_system
 from astropy.time import Time
 
 
@@ -50,7 +50,7 @@ class Targets:
         targets = []
         if "list" in config_dict.keys():
             for el in config_dict["list"]:
-                if el not in ["saturn", "jupiter"]:
+                if el not in solar_system.BODY_NAME_TO_KERNEL_SPEC.keys():
                     targets.append(FixedTarget(SkyCoord.from_name(el), name=el))
                 else:
                     if observer is not None and date is not None:
