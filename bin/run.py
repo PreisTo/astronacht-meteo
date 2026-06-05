@@ -22,7 +22,12 @@ if __name__ == "__main__":
     )
     ax[0].legend()
 
+    if astronacht.weather.dewpoint is not None:
+        print("here")
+        astronacht.weather.plot_nowcast_parameter(ax=ax[1], parameter="dewpoint")
+        ax[1].legend()
     astronacht.weather.plot_parameter(ax=ax[1], parameter="temperature")
+
     astronacht.weather.plot_parameter(
         ax=ax[2],
         parameter="relative_humidity",

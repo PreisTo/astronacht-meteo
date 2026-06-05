@@ -130,6 +130,13 @@ class Weather:
         return self._wind
 
     @property
+    def dewpoint(self):
+        if hasattr(self, "_dew_point_nc"):
+            return self._dew_point_nc
+        else:
+            return None
+
+    @property
     def times(self):
         return self._times
 
@@ -157,5 +164,24 @@ class Weather:
             color=color,
             alpha=0.2,
         )
+
+        return ax
+
+    def plot_nowcast_parameter(
+        self, ax, parameter="dewpoint", title=False, label=None, color="lightblue"
+    ):
+        ax.plot(self._times_nc, self._dew_point_nc, label="Dewpoint", color=color)
+        ymin, ymax = ax.get_ylim()
+        if ymin > np.min(self._dew_point_nc).value:
+            if np.min(self._dew_point_nc).value > 0:
+                ymin = 0.9 * np.min(self._dew_point_nc).value
+            else:
+                ymin = -np.abs(np.min(self._dew_point_nc)).value * 1.1
+        if ymax < np.max(self._dew_point_nc).value:
+            if np.max(self._dew_point_nc).value > 0:
+                ymax = 1.1 * np.max(self._dew_point_nc).value
+            else:
+                ymax = -np.abs(np.min(self._dew_point_nc)).value * 0.9
+        ax.set_ylim(ymin, ymax)
 
         return ax
