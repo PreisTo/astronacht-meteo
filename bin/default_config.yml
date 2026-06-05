@@ -1,12 +1,9 @@
 location:
-  name: "Technik"
-  lon: 11.342491131078917 #degree
-  lat: 47.26435136748764 #degree
-  elevation: 600 #meter
+  name: "hafelekar"
 
 date:
   day: "today"
-  start_time: "19:00"
+  start_time: "17:00"
   duration: 150 # min
 
 

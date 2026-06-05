@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 
-minimum_keys = {"location": ["name", "lon", "lat"], "date": ["day", "start_time"]}
+minimum_keys = {"location": ["name"], "date": ["day", "start_time"]}
 
 
 def load_config(filename) -> dict:
