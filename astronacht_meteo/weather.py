@@ -1,9 +1,9 @@
-import astropy.units as u
-import numpy as np
 from datetime import datetime, timedelta
 
+import astropy.units as u
+import numpy as np
 
-from astronacht_meteo.geosphere_api import AROME, Nowcast, Ensemble
+from astronacht_meteo.geosphere_api import AROME, Ensemble, Nowcast
 from astronacht_meteo.io.plot_timeseries import get_weather_plot
 from astronacht_meteo.location import Location
 
@@ -89,21 +89,21 @@ class Weather:
 
     def _get_data_from_nowcast(self):
         # clouds, surface pressure, temperature 2m, rel. humidity 2m
-        parameters = []
+        parameters = [
+            "rh2m",
+            "t2m",
+            "td",
+        ]
         query_key, data = self._nowcast.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
         assert data is not None
-        self._clouds = data["tcc"] * 100 * u.percent
-        self._pressure = data["sp"] * u.Pa
-        self._temperature = data["t2m"] * u.Celsius
-        self._relative_humidity = data["rh2m"] * u.percent
-        self._times = data["times"]
-        self._ref_time = data["reference_time"]
-        self._wind = np.sqrt(
-            np.power(data["u10m"], 2) + np.power(data["v10m"], 2)
-        ) * u.Unit("m/s")
+        self._temperature_nc = data["t2m"] * u.Celsius
+        self._relative_humidity_nc = data["rh2m"] * u.percent
+        self._dew_point_nc = data["td"] * u.Celsius
+        self._times_nc = data["times"]
+        self._ref_time_nc = data["reference_time"]
 
     @property
     def clouds(self):
