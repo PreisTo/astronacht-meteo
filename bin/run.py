@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import pathlib
+
 import matplotlib.pyplot as plt
 
-import pathlib
 from astronacht_meteo.astronacht import Astronacht
 
 if __name__ == "__main__":
