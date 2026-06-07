@@ -6,6 +6,7 @@ import numpy as np
 from astronacht_meteo.geosphere_api import AROME, Ensemble, Nowcast
 from astronacht_meteo.io.plot_timeseries import get_weather_plot
 from astronacht_meteo.location import Location
+from astronacht_meteo.utils.formula import magnus_formula
 
 # TODO:method that gets values for an input time
 
@@ -44,6 +45,10 @@ class Weather:
         self._pressure = data["sp"] * u.Pa
         self._temperature = data["t2m"] * u.Celsius
         self._relative_humidity = data["rh2m"] * u.percent
+        self._dewpoint = (
+            magnus_formula(self._temperature.value, self._relative_humidity.value)
+            * u.Celsius
+        )
         self._times = data["times"]
         self._ref_time = data["reference_time"]
         self._wind = np.sqrt(
@@ -131,6 +136,10 @@ class Weather:
 
     @property
     def dewpoint(self):
+        return self._dewpoint
+
+    @property
+    def dewpoint_nc(self):
         if hasattr(self, "_dew_point_nc"):
             return self._dew_point_nc
         else:
@@ -170,7 +179,9 @@ class Weather:
     def plot_nowcast_parameter(
         self, ax, parameter="dewpoint", title=False, label=None, color="lightblue"
     ):
-        ax.plot(self._times_nc, self._dew_point_nc, label="Dewpoint", color=color)
+        ax.plot(
+            self._times_nc, self._dew_point_nc, label="Dewpoint Nowcast", color=color
+        )
         ymin, ymax = ax.get_ylim()
         if ymin > np.min(self._dew_point_nc).value:
             if np.min(self._dew_point_nc).value > 0:
