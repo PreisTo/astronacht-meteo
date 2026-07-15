@@ -20,6 +20,7 @@ if __name__ == "__main__":
     astronacht.weather.plot_ensemble_parameter(
         ax=ax[0], parameter="clouds_ensemble", label="Ensemble"
     )
+    ax[0].set_ylim(0, 100)
     ax[0].legend()
 
     if astronacht.weather.dewpoint_nc is not None:
@@ -34,6 +35,7 @@ if __name__ == "__main__":
         ax=ax[2],
         parameter="relative_humidity",
     )
+    ax[2].set_ylim(0, 100)
     astronacht.weather.plot_parameter(
         ax=ax[3],
         parameter="pressure",
