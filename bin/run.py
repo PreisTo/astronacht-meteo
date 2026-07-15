@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
+import pathlib
+
 import matplotlib.pyplot as plt
 
-import pathlib
 from astronacht_meteo.astronacht import Astronacht
 
 if __name__ == "__main__":
@@ -13,20 +14,35 @@ if __name__ == "__main__":
         nrows=2, ncols=2, layout="constrained", figsize=(16, 9), sharex=True
     )
     ax = ax.flatten()
-    astronacht.weather.plot_parameter(ax=ax[0], parameter="clouds")
+    astronacht.weather.plot_parameter(
+        ax=ax[0], parameter="clouds", color="black", label="AROME"
+    )
+    astronacht.weather.plot_ensemble_parameter(
+        ax=ax[0], parameter="clouds_ensemble", label="Ensemble"
+    )
+    ax[0].set_ylim(0, 100)
+    ax[0].legend()
+
+    if astronacht.weather.dewpoint_nc is not None:
+        astronacht.weather.plot_nowcast_parameter(ax=ax[1], parameter="dewpoint")
+    astronacht.weather.plot_parameter(
+        ax=ax[1], parameter="dewpoint", label="Dewpoint Magnus"
+    )
     astronacht.weather.plot_parameter(ax=ax[1], parameter="temperature")
+    ax[1].legend()
+
     astronacht.weather.plot_parameter(
         ax=ax[2],
         parameter="relative_humidity",
     )
+    ax[2].set_ylim(0, 100)
     astronacht.weather.plot_parameter(
         ax=ax[3],
         parameter="pressure",
     )
     fig.suptitle(f"Last update at {astronacht.weather.ref_time}")
-    plt.show()
     if len(astronacht.targets.targets) > 0:
-        fig, ax = plt.subplots(1, layout="constrained", figsize=(16, 9))
+        fig2, ax = plt.subplots(1, layout="constrained", figsize=(16, 9))
         ax = astronacht.targets.get_airmass_plot(ax=ax)
         ax.legend()
-        plt.show()
+    plt.show()

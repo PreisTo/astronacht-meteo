@@ -18,25 +18,32 @@ def get_weather_plot(
     ax=None,
     title=False,
     date: Optional["Date"] = None,
+    label=None,
+    color=None,
+    **kwargs,
 ) -> mpl.axes.Axes:
+
     if ax is None:
         fig, ax = plt.subplots(1, layout="constrained")
     data = getattr(weather, parameter)
-    ax.plot(weather.times, data)
+    ax.plot(weather.times, data, label=label, color=color)
     if isinstance(data, u.Quantity):
         data = data.value
 
-    if np.min(data) < 0:
-        y_min = -np.abs(np.min(data)) * 1.1
-    else:
-        y_min = 0.9 * np.min(data)
-
-    if np.max(data) < 0:
-        y_max = -np.abs(np.max(data)) * 0.9
-    else:
-        y_max = 1.1 * np.max(data)
+    y_min, y_max = ax.get_ylim()
+    if y_min > np.min(data):
+        if np.min(data) < 0:
+            y_min = -np.abs(np.min(data)) * 1.1
+        else:
+            y_min = 0.9 * np.min(data)
+    if y_max < np.max(data):
+        if np.max(data) < 0:
+            y_max = -np.abs(np.max(data)) * 0.9
+        else:
+            y_max = 1.1 * np.max(data)
 
     ax.set_ylim(y_min, y_max)
+
     if date is not None:
         ax.fill_between(
             [date.start_time, date.stop_time],
@@ -45,6 +52,8 @@ def get_weather_plot(
             color="magenta",
             alpha=0.2,
         )
+    if kwargs.pop("indicate_midnight", True):
+        pass
 
     ax.xaxis.set_major_formatter(
         mdates.DateFormatter("%m-%d %H:%M", tz=pytz.timezone("Europe/Vienna"))
