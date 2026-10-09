@@ -160,7 +160,13 @@ class Weather:
         return ax
 
     def plot_ensemble_parameter(
-        self, ax, parameter="clouds_ensemble", title=False, label=None, color="grey"
+        self,
+        ax,
+        parameter="clouds_ensemble",
+        title=False,
+        label=None,
+        color="grey",
+        **kwargs,
     ):
         ax.plot(
             self._times_ensemble, self._clouds_ensemble[1], label=label, color=color

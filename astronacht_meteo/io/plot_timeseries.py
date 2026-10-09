@@ -20,6 +20,7 @@ def get_weather_plot(
     date: Optional["Date"] = None,
     label=None,
     color=None,
+    show_observation_time=True,
     **kwargs,
 ) -> mpl.axes.Axes:
 
@@ -51,7 +52,7 @@ def get_weather_plot(
 
     ax.set_ylim(y_min, y_max)
 
-    if date is not None:
+    if date is not None and show_observation_time:
         ax.fill_between(
             [date.start_time, date.stop_time],
             y_min,

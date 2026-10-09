@@ -15,10 +15,12 @@ if __name__ == "__main__":
     )
     ax = ax.flatten()
     astronacht.weather.plot_parameter(
-        ax=ax[0], parameter="clouds", color="black", label="AROME"
+        ax=ax[0], parameter="clouds", color="black", label="AROME", ylim=(0, 100)
     )
     astronacht.weather.plot_ensemble_parameter(
-        ax=ax[0], parameter="clouds_ensemble", label="Ensemble"
+        ax=ax[0],
+        parameter="clouds_ensemble",
+        label="Ensemble",
     )
     ax[0].set_ylim(0, 100)
     ax[0].legend()
@@ -26,7 +28,10 @@ if __name__ == "__main__":
     if astronacht.weather.dewpoint_nc is not None:
         astronacht.weather.plot_nowcast_parameter(ax=ax[1], parameter="dewpoint")
     astronacht.weather.plot_parameter(
-        ax=ax[1], parameter="dewpoint", label="Dewpoint Magnus"
+        ax=ax[1],
+        parameter="dewpoint",
+        label="Dewpoint Magnus",
+        show_observation_time=False,
     )
     astronacht.weather.plot_parameter(ax=ax[1], parameter="temperature")
     ax[1].legend()
