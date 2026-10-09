@@ -7,14 +7,7 @@ from astronacht_meteo.utils.config import load_config
 from astronacht_meteo.weather import Weather
 
 from .date import Date
-from .location import Location
-
-_known_locations = {
-    "technik": Location(
-        lon=11.342491131078917, lat=47.26435136748764, name="Technik", elevation=600
-    ),
-    "reith": Location(lat=47.300188, lon=11.203271, name="Reith", elevation=1140),
-}
+from .location import Location, _known_locations
 
 
 class Astronacht:

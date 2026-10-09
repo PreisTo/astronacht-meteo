@@ -26,6 +26,10 @@ class Date:
         self._timezone = timezone
 
     @property
+    def timezone(self):
+        return self._timezone
+
+    @property
     def day(self):
         return self._day
 
