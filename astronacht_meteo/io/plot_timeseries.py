@@ -29,8 +29,15 @@ def get_weather_plot(
     ax.plot(weather.times, data, label=label, color=color)
     if isinstance(data, u.Quantity):
         data = data.value
-
     y_min, y_max = ax.get_ylim()
+    ylim = kwargs.get("ylim", None)
+    if ylim is not None:
+        assert hasattr(
+            ylim, "__len__"
+        ), "When providing ylim it has to be an iterable with length 2"
+        y_min = ylim[0]
+        y_max = ylim[1]
+
     if y_min > np.min(data):
         if np.min(data) < 0:
             y_min = -np.abs(np.min(data)) * 1.1

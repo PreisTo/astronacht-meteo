@@ -34,6 +34,7 @@ if __name__ == "__main__":
     astronacht.weather.plot_parameter(
         ax=ax[2],
         parameter="relative_humidity",
+        ylim=(0, 100),
     )
     ax[2].set_ylim(0, 100)
     astronacht.weather.plot_parameter(
