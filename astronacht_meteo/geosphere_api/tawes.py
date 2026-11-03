@@ -45,5 +45,4 @@ class TAWES(GeosphereAPI):
         if parameters is None:
             parameters = []
         if position is None and station is None and not hasattr(self, "_station"):
-
             pass
