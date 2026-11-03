@@ -21,7 +21,6 @@ class GeosphereAPI:
         self._url = (
             f"{self.host}/{self.version}/{self.dtype}/{self.mode}/{self.resource_id}"
         )
-        pass
 
     def _check_init_parameters(self):
         assert self.dtype is not None

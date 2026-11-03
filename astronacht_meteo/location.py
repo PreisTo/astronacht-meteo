@@ -34,10 +34,10 @@ class Location:
 
     @classmethod
     def from_dict(cls, config_dict: dict):
-        if "name" in config_dict.keys():
+        if "name" in config_dict:
             name = config_dict["name"]
             config_dict.pop("name")
-            if name.lower() in _known_locations.keys():
+            if name.lower() in _known_locations:
                 if len(config_dict.keys()) < 2:
                     log.warning(
                         f"Only have name '{name}' in location config"
@@ -47,7 +47,7 @@ class Location:
         else:
             name = None
 
-        if "elevation" in config_dict.keys():
+        if "elevation" in config_dict:
             elevation = config_dict["elevation"]
             config_dict.pop("elevation")
         else:
