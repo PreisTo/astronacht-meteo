@@ -1,6 +1,5 @@
 import logging
 from datetime import datetime
-from typing import Tuple
 
 import numpy as np
 
@@ -26,15 +25,17 @@ class AROME(GeosphereAPI):
 
     def get_timeseries_data(
         self,
-        parameters=["tcc"],
+        parameters=None,
         position="47.26435136748764,11.342491131078917",  # VFH
-    ) -> Tuple[str, dict]:
+    ) -> tuple[str, dict]:
+        if parameters is None:
+            parameters = ["tcc"]
         params = {
             "parameters": parameters,
             "lat_lon": position,
             "forecast_offset": 0,
         }
-        if not str(params.items()) in self._last_query.keys():
+        if not str(params.items()) in self._last_query:
             res = self._query_dict(params)
         else:
             res = self._last_query[str(params.items())]

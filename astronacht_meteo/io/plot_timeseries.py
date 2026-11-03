@@ -25,7 +25,7 @@ def get_weather_plot(
 ) -> mpl.axes.Axes:
 
     if ax is None:
-        fig, ax = plt.subplots(1, layout="constrained")
+        _fig, ax = plt.subplots(1, layout="constrained")
     data = getattr(weather, parameter)
     ax.plot(weather.times, data, label=label, color=color)
     if isinstance(data, u.Quantity):

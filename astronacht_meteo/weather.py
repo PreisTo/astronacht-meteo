@@ -40,7 +40,7 @@ class Weather:
             "u10m",
             "v10m",
         ]
-        query_key, data = self._arome.get_timeseries_data(
+        _query_key, data = self._arome.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
@@ -69,7 +69,7 @@ class Weather:
             "10u",
             "10v",
         ]
-        query_key, data = self._nwpv2.get_timeseries_data(
+        _query_key, data = self._nwpv2.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
@@ -103,7 +103,7 @@ class Weather:
             #            "v10m_p50",
             #            "v10m_p90",
         ]
-        query_key, data = self._ensemble.get_timeseries_data(
+        _query_key, data = self._ensemble.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
@@ -127,7 +127,7 @@ class Weather:
             "t2m",
             "td",
         ]
-        query_key, data = self._nowcast.get_timeseries_data(
+        _query_key, data = self._nowcast.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
