@@ -22,9 +22,7 @@ class TestWeather(unittest.TestCase):
             "times": [datetime(2026, 11, 12)],
             "reference_time": datetime(2026, 11, 12),
         }
-        ensemble = SimpleNamespace(
-            get_timeseries_data=Mock(return_value=("key", data))
-        )
+        ensemble = SimpleNamespace(get_timeseries_data=Mock(return_value=("key", data)))
         location = SimpleNamespace(lat=47.0, lon=11.0)
 
         with patch("astronacht_meteo.weather.Ensemble", return_value=ensemble):

@@ -72,8 +72,7 @@ class TestNWPV2(unittest.TestCase):
 
         self.assertEqual(
             api._url,
-            "https://dataset.api.hub.geosphere.at/v1/timeseries/forecast/"
-            "nwp-v2-1h-1km",
+            "https://dataset.api.hub.geosphere.at/v1/timeseries/forecast/nwp-v2-1h-1km",
         )
         query.assert_called_once_with(
             {

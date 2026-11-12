@@ -55,8 +55,7 @@ class Weather:
             np.power(data["10u_p50"], 2) + np.power(data["10v_p50"], 2)
         ) * u.Unit("m/s")
         self._clouds_ensemble = (
-            np.array([data["tcc_p10"], data["tcc_p50"], data["tcc_p90"]])
-            * u.percent
+            np.array([data["tcc_p10"], data["tcc_p50"], data["tcc_p90"]]) * u.percent
         )
         self._times_ensemble = data["times"]
 

@@ -37,13 +37,12 @@ class Location:
         if "name" in config_dict:
             name = config_dict["name"]
             config_dict.pop("name")
-            if name.lower() in _known_locations:
-                if len(config_dict.keys()) < 2:
-                    log.warning(
-                        f"Only have name '{name}' in location config"
-                        + " corresponding to a knwon location - will use it"
-                    )
-                    return _known_locations[name.lower()]
+            if name.lower() in _known_locations and len(config_dict.keys()) < 2:
+                log.warning(
+                    f"Only have name '{name}' in location config"
+                    + " corresponding to a knwon location - will use it"
+                )
+                return _known_locations[name.lower()]
         else:
             name = None
 

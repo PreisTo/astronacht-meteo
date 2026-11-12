@@ -12,7 +12,7 @@ class Date:
         start_time: datetime,
         duration: timedelta | None = None,
         stop_time: datetime | None = None,
-        timezone: timezone | None = pytz.timezone("Europe/Vienna"),
+        timezone: timezone | str = "Europe/Vienna",
     ):
         # TODO: what todo if no duration or stop_time defined? Sunrise?
         self._start_time = start_time
@@ -22,7 +22,10 @@ class Date:
         if stop_time is not None:
             duration = self._stop_time - self._start_time
         self._duration = duration
-        self._timezone = timezone
+        if isinstance(timezone, timezone):
+            self._timezone = timezone
+        elif isinstance(timezone, str):
+            self._timezone = pytz.timezone(timezone)
 
     @property
     def timezone(self):
@@ -49,9 +52,9 @@ class Date:
         # TODO: this is a mess
 
         if config_dict["day"].lower() == "today":
-            day = datetime.today().strftime("%d.%m.%Y")
+            day = datetime.now().strftime("%d.%m.%Y")
         elif config_dict["day"].lower() == "tomorrow":
-            day = (datetime.today() + timedelta(days=1)).strfimte("%d.%m.%Y")
+            day = (datetime.now() + timedelta(days=1)).strfimte("%d.%m.%Y")
         else:
             try:
                 datetime.strptime(config_dict["day"], "%d.%m.%Y")
