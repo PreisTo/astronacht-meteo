@@ -2,7 +2,7 @@ from pathlib import Path
 
 import yaml
 
-minimum_keys = {"location": ["name", "lon", "lat"], "date": ["day", "start_time"]}
+minimum_keys = {"location": ["name"], "date": ["day", "start_time"]}
 
 
 def load_config(filename) -> dict:
@@ -12,12 +12,12 @@ def load_config(filename) -> dict:
     with filename.open("r") as f:
         config = yaml.safe_load(f)
     for k, v in minimum_keys.items():
-        assert k in config.keys(), (
+        assert k in config, (
             f"You are missing {k} in your config file. "
             + f"You need to provide at least {minimum_keys}"
         )
         for sk in v:
-            assert sk in config[k].keys(), (
+            assert sk in config[k], (
                 f"You are missing {k}/{sk} in your config file. "
                 + f"You need to provide at least {minimum_keys}"
             )

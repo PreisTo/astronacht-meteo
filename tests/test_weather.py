@@ -12,6 +12,8 @@ class TestWeather(unittest.TestCase):
     def test_uses_ensemble_median_parameters_and_units(self):
         data = {
             "tcc_p50": np.array([45.0]),
+            "tcc_p10": np.array([25.0]),
+            "tcc_p90": np.array([65.0]),
             "msl_p50": np.array([100000.0]),
             "2t_p50": np.array([12.0]),
             "2r_p50": np.array([70.0]),
@@ -31,6 +33,8 @@ class TestWeather(unittest.TestCase):
         ensemble.get_timeseries_data.assert_called_once_with(
             parameters=[
                 "tcc_p50",
+                "tcc_p10",
+                "tcc_p90",
                 "msl_p50",
                 "2t_p50",
                 "2r_p50",
@@ -44,6 +48,9 @@ class TestWeather(unittest.TestCase):
         self.assertEqual(weather.temperature.value.tolist(), [12.0])
         self.assertEqual(weather.relative_humidity.value.tolist(), [70.0])
         self.assertEqual(weather.wind.value.tolist(), [5.0])
+        self.assertEqual(
+            weather.clouds_ensemble.value.tolist(), [[25.0], [45.0], [65.0]]
+        )
 
 
 if __name__ == "__main__":

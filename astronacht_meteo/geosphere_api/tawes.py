@@ -41,7 +41,8 @@ class TAWES(GeosphereAPI):
         self._closest_station = stations[ids_sorted[0]]
         self._near_stations = stations[ids_sorted[:3]]
 
-    def get_current_data(self, parameters=[], position=None, station=None):
+    def get_current_data(self, parameters=None, position=None, station=None):
+        if parameters is None:
+            parameters = []
         if position is None and station is None and not hasattr(self, "_station"):
-
             pass
