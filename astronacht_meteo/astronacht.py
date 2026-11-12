@@ -1,20 +1,12 @@
 import warnings
 from pathlib import Path
-from typing import Optional, Union
 
 from astronacht_meteo.targets import Targets
 from astronacht_meteo.utils.config import load_config
 from astronacht_meteo.weather import Weather
 
 from .date import Date
-from .location import Location
-
-_known_locations = {
-    "technik": Location(
-        lon=11.342491131078917, lat=47.26435136748764, name="Technik", elevation=600
-    ),
-    "reith": Location(lat=47.300188, lon=11.203271, name="Reith", elevation=1140),
-}
+from .location import Location, _known_locations
 
 
 class Astronacht:
@@ -26,7 +18,7 @@ class Astronacht:
     """
 
     def __init__(
-        self, date=None, location="Technik", targets: Optional[Targets] = None
+        self, date=None, location="Technik", targets: Targets | None = None
     ) -> None:
         self._location = self._check_location(location)
         self._date = self._check_date(date)
@@ -42,11 +34,11 @@ class Astronacht:
                 " we will save them but location and time will be overwritten"
             )
 
-    def _check_location(self, location: Union[Location, str]) -> Location:
+    def _check_location(self, location: Location | str) -> Location:
         if isinstance(location, Location):
             return location
         elif isinstance(location, str):
-            if location.lower() in _known_locations.keys():
+            if location.lower() in _known_locations:
                 return _known_locations[location.lower()]
             else:
                 raise ValueError(
@@ -58,7 +50,7 @@ class Astronacht:
                 "You need to provide location as either Location or str"
             )
 
-    def _check_date(self, date: Union[Date, str]) -> Date:
+    def _check_date(self, date: Date | str) -> Date:
         if isinstance(date, Date):
             return date
         elif isinstance(date, str):
@@ -80,11 +72,11 @@ class Astronacht:
         return self._targets
 
     @classmethod
-    def from_config(cls, config_file: Union[Path, str]):
+    def from_config(cls, config_file: Path | str):
         config_dict = load_config(config_file)
         location = Location.from_dict(config_dict["location"])
         date = Date.from_dict(config_dict["date"], location)
-        if "targets" in config_dict.keys():
+        if "targets" in config_dict:
             targets = Targets.from_dict(
                 config_dict["targets"], observer=location.observer, date=date
             )

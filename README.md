@@ -1,3 +1,7 @@
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/PreisTo/astronacht-meteo/main.svg)](https://results.pre-commit.ci/latest/github/PreisTo/astronacht-meteo/main)
+
+
 # Astronacht Meteo
 
 Some tools for helping to decide if its worth to do an "Astronacht".

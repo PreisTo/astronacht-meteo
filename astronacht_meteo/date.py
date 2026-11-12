@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta, timezone
-from typing import Optional
 
 import pytz
 
@@ -11,9 +10,9 @@ class Date:
         self,
         day: datetime,
         start_time: datetime,
-        duration: Optional[timedelta] = None,
-        stop_time: Optional[datetime] = None,
-        timezone: Optional[timezone] = pytz.timezone("Europe/Vienna"),
+        duration: timedelta | None = None,
+        stop_time: datetime | None = None,
+        timezone: timezone | str = "Europe/Vienna",
     ):
         # TODO: what todo if no duration or stop_time defined? Sunrise?
         self._start_time = start_time
@@ -23,7 +22,14 @@ class Date:
         if stop_time is not None:
             duration = self._stop_time - self._start_time
         self._duration = duration
-        self._timezone = timezone
+        if isinstance(timezone, timezone):
+            self._timezone = timezone
+        elif isinstance(timezone, str):
+            self._timezone = pytz.timezone(timezone)
+
+    @property
+    def timezone(self):
+        return self._timezone
 
     @property
     def day(self):
@@ -46,9 +52,9 @@ class Date:
         # TODO: this is a mess
 
         if config_dict["day"].lower() == "today":
-            day = datetime.today().strftime("%d.%m.%Y")
+            day = datetime.now().strftime("%d.%m.%Y")
         elif config_dict["day"].lower() == "tomorrow":
-            day = (datetime.today() + timedelta(days=1)).strfimte("%d.%m.%Y")
+            day = (datetime.now() + timedelta(days=1)).strfimte("%d.%m.%Y")
         else:
             try:
                 datetime.strptime(config_dict["day"], "%d.%m.%Y")
@@ -71,7 +77,7 @@ class Date:
                     "The start_time must be either earliest or" + "specified by hh:mm"
                 ) from e
 
-        if "stop_time" in config_dict.keys():
+        if "stop_time" in config_dict:
             if config_dict["stop_time"].lower() == "latest":
                 raise NotImplementedError
             else:
@@ -86,7 +92,7 @@ class Date:
         else:
             stop_time = None
 
-        if "duration" in config_dict.keys():
+        if "duration" in config_dict:
             duration = timedelta(minutes=float(config_dict["duration"]))
         else:
             duration = None
@@ -101,7 +107,7 @@ class Date:
             stop_time = datetime.strptime(start_time, "%d.%m.%Y-%H:%M") + duration
         start_time = datetime.strptime(start_time, "%d.%m.%Y-%H:%M")
 
-        if "timezone" in config_dict.keys():
+        if "timezone" in config_dict:
             timezone = pytz.timezone(config_dict["timezone"])
         else:
             timezone = pytz.timezone("Europe/Vienna")

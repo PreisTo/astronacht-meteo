@@ -17,7 +17,7 @@ class Targets:
 
     def get_airmass_plot(self, ax=None):
         if ax is None:
-            fig, ax = plt.subplots(1)
+            _fig, ax = plt.subplots(1)
         for target in self._targets:
             plot_airmass(
                 target,
@@ -48,9 +48,9 @@ class Targets:
         observer = kwargs.get("observer", None)
         date = kwargs.get("date", None)
         targets = []
-        if "list" in config_dict.keys():
+        if "list" in config_dict:
             for el in config_dict["list"]:
-                if el not in solar_system.BODY_NAME_TO_KERNEL_SPEC.keys():
+                if el not in solar_system.BODY_NAME_TO_KERNEL_SPEC:
                     targets.append(FixedTarget(SkyCoord.from_name(el), name=el))
                 else:
                     if observer is not None and date is not None:
