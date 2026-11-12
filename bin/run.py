@@ -15,7 +15,11 @@ if __name__ == "__main__":
     )
     ax = ax.flatten()
     astronacht.weather.plot_parameter(
-        ax=ax[0], parameter="clouds", color="black", label="AROME", ylim=(0, 100)
+        ax=ax[0],
+        parameter="clouds",
+        color="black",
+        label="Ensemble median",
+        ylim=(0, 100),
     )
     astronacht.weather.plot_ensemble_parameter(
         ax=ax[0],
