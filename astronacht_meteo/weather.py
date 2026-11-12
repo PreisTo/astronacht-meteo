@@ -1,7 +1,7 @@
 import astropy.units as u
 import numpy as np
 
-from astronacht_meteo.geosphere_api.arome import AROME
+from astronacht_meteo.geosphere_api.ensemble import Ensemble
 from astronacht_meteo.io.plot_timeseries import get_weather_plot
 from astronacht_meteo.location import Location
 
@@ -11,11 +11,11 @@ from astronacht_meteo.location import Location
 class Weather:
     def __init__(self, location: Location, date=None):
         self._location = location
-        self._arome = AROME()
-        self._get_data_from_arome()
+        self._ensemble = Ensemble()
+        self._get_data_from_ensemble()
         self._date = date
 
-    def _get_data_from_arome(self):
+    def _get_data_from_ensemble(self):
         # clouds, surface pressure, temperature 2m, rel. humidity 2m
         parameters = [
             "tcc",
@@ -25,7 +25,7 @@ class Weather:
             "u10m",
             "v10m",
         ]
-        query_key, data = self._arome.get_timeseries_data(
+        query_key, data = self._ensemble.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )

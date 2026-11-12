@@ -9,14 +9,13 @@ from .geosphere_hub import GeosphereAPI
 log = logging.getLogger(__name__)
 
 
-class AROME(GeosphereAPI):
+class Ensemble(GeosphereAPI):
     """
-    The AROME high resolution model:
-    Application of Research to Operations at MEsoscale
-    https://data.hub.geosphere.at/dataset/nwp-v1-1h-2500m
+    The Geosphere Austria ensemble forecast:
+    https://data.hub.geosphere.at/dataset/ensemble-v2-1h-1km
     """
 
-    resource_id = "nwp-v1-1h-2500m"
+    resource_id = "ensemble-v2-1h-1km"
     mode = "forecast"
 
     def __init__(self, dtype="timeseries"):
