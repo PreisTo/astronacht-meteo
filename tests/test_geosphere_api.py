@@ -12,7 +12,7 @@ class TestEnsemble(unittest.TestCase):
                 {
                     "properties": {
                         "parameters": {
-                            "tcc": {"data": [0.25, 0.5]},
+                            "tcc_p50": {"data": [25.0, 50.0]},
                         }
                     }
                 }
@@ -26,7 +26,7 @@ class TestEnsemble(unittest.TestCase):
 
         with patch.object(api, "_query_dict", return_value=response) as query:
             query_key, data = api.get_timeseries_data(
-                parameters=["tcc"], position="47.0,11.0"
+                parameters=["tcc_p50"], position="47.0,11.0"
             )
 
         self.assertEqual(
@@ -36,12 +36,12 @@ class TestEnsemble(unittest.TestCase):
         )
         query.assert_called_once_with(
             {
-                "parameters": ["tcc"],
+                "parameters": ["tcc_p50"],
                 "lat_lon": "47.0,11.0",
                 "forecast_offset": 0,
             }
         )
-        self.assertEqual(data["tcc"].tolist(), [0.25, 0.5])
+        self.assertEqual(data["tcc_p50"].tolist(), [25.0, 50.0])
         self.assertEqual(len(data["times"]), 2)
         self.assertIn("parameters", query_key)
 

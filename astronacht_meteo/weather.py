@@ -16,28 +16,28 @@ class Weather:
         self._date = date
 
     def _get_data_from_ensemble(self):
-        # clouds, surface pressure, temperature 2m, rel. humidity 2m
+        # Use the median forecast for each parameter.
         parameters = [
-            "tcc",
-            "sp",
-            "t2m",
-            "rh2m",
-            "u10m",
-            "v10m",
+            "tcc_p50",
+            "msl_p50",
+            "2t_p50",
+            "2r_p50",
+            "10u_p50",
+            "10v_p50",
         ]
-        query_key, data = self._ensemble.get_timeseries_data(
+        _, data = self._ensemble.get_timeseries_data(
             parameters=parameters,
             position=f"{self._location.lat},{self._location.lon}",
         )
         assert data is not None
-        self._clouds = data["tcc"] * 100 * u.percent
-        self._pressure = data["sp"] * u.Pa
-        self._temperature = data["t2m"] * u.Celsius
-        self._relative_humidity = data["rh2m"] * u.percent
+        self._clouds = data["tcc_p50"] * u.percent
+        self._pressure = data["msl_p50"] * u.Pa
+        self._temperature = data["2t_p50"] * u.Celsius
+        self._relative_humidity = data["2r_p50"] * u.percent
         self._times = data["times"]
         self._ref_time = data["reference_time"]
         self._wind = np.sqrt(
-            np.power(data["u10m"], 2) + np.power(data["v10m"], 2)
+            np.power(data["10u_p50"], 2) + np.power(data["10v_p50"], 2)
         ) * u.Unit("m/s")
 
     @property

@@ -25,7 +25,7 @@ class Ensemble(GeosphereAPI):
 
     def get_timeseries_data(
         self,
-        parameters=["tcc"],
+        parameters=["tcc_p50"],
         position="47.26435136748764,11.342491131078917",  # VFH
     ) -> Tuple[str, dict]:
         params = {
